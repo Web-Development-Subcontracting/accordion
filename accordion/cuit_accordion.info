@@ -1,0 +1,5 @@
+name = "CUIT accordion plugin"
+description = "Adds the ability to collapse elements (CKEditor)"
+package = Custom
+dependencies[] = wysiwyg
+core = 7.x
