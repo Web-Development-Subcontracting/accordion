@@ -1,4 +1,4 @@
-name = "CUIT accordion plugin"
+name = "CCIT accordion plugin"
 description = "Adds the ability to collapse elements (CKEditor)"
 package = Custom
 dependencies[] = wysiwyg
