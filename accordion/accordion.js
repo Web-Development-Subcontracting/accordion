@@ -179,4 +179,3 @@ function unfade(element) {
 		}
 	}
 })(jQuery);
-  
