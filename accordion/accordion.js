@@ -6,6 +6,7 @@
 */
 
 var styles = "cursor: pointer";
+var kilroy = false;
 
 /* Gets padding bottom + padding top as a float */
 function getPadding(content) {
@@ -40,9 +41,13 @@ function getPadding(content) {
 	// Wait for the transition to end
 	return new Promise(resolve => { 
 		setTimeout(() => {
-			const computedStyleAtEnd = getComputedStyle(content);
-			let verticalPadding = getTotalVerticalPadding(computedStyleAtEnd.padding);
-			resolve(verticalPadding);
+			if (content.classList.contains("open")) {
+				const computedStyleAtEnd = getComputedStyle(content);
+				let verticalPadding = getTotalVerticalPadding(computedStyleAtEnd.padding);
+				resolve(verticalPadding);
+			} else {
+				resolve(0);
+			}
 		}, totalTime);
 	});
 }
@@ -65,18 +70,24 @@ function getTransitionEndEventName() {
 
 /* Defines what happens when the user clicks a collapsible element. */
 function accordionToggle(btn, elem, add=0, closeable=true) {
-
+	var kids_fullHeight;
+	var content = elem.querySelector(".collapsible-content");
+	if (content.classList.contains("open") && content.classList.contains("transition-open")) {
+		// ignore double click
+		if (content.classList.contains("transition-closed") ) {
+			kilroy = true;
+		}
+		return;
+	}
 	if (btn.classList.contains("collapsible-closed") || !closeable) {
-	  // Swap the classes
+	  	// Swap the classes
 		btn.classList.remove("collapsible-closed");
 		btn.classList.add("collapsible-open");
-		let content = elem.querySelector(".collapsible-content");
 		content.classList.add("open");
 
-		var kids_fullHeight = 0 + add;
+		kids_fullHeight = 0 + add;
               
 		// jQuery's outerHeight() function is more accurate than JavaScript's scrollHeight or Height in this case
-		// Until this is refactored, temporary call a self executing jQuery function
 		(function($) {
 			var collapsibles = $(btn).siblings('div:first').children();
 
@@ -118,9 +129,9 @@ function accordionToggle(btn, elem, add=0, closeable=true) {
 		// If the button element is clicked, close the content
 		btn.classList.remove("collapsible-open");
 		btn.classList.add("collapsible-closed");
-		let content = elem.querySelector(".collapsible-content");
 		content.classList.remove("open");
 		content.style.maxHeight = "0"; // Collapse the content
+		kids_fullHeight = 0;
 
 		let transitionEndEventName = getTransitionEndEventName();
 		content.addEventListener(transitionEndEventName, onTransitionEnd);
@@ -130,6 +141,13 @@ function accordionToggle(btn, elem, add=0, closeable=true) {
 			content.removeEventListener(transitionEndEventName, onTransitionEnd);
 			content.classList.remove("transition-closed");
 	  	}
+	}
+	if (kilroy) {
+		//a rare bug in which we will close the accordion
+		content.classList.remove("open");
+		content.style.maxHeight = "0";
+		kids_fullHeight = 0;
+		console.warn("Kilroy was here.");kilroy=false;
 	}
 }
   
