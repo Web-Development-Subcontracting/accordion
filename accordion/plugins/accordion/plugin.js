@@ -1,6 +1,6 @@
 /*
 Add a button to ckeditor to create nestable accordion elements.
-This is an improved, accessible version of cuit's "collapsables"
+This is an improved, accessible version of ccit's "collapsables"
 Author: Ben Alexander, student worker, circa 2023
 */
 
