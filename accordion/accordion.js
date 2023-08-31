@@ -6,7 +6,7 @@
 */
 
 var styles = "cursor: pointer";
-var kilroy = false;
+var overclick = false;
 
 /* Gets padding bottom + padding top as a float */
 function getPadding(content) {
@@ -75,7 +75,7 @@ function accordionToggle(btn, elem, add=0, closeable=true) {
 	if (content.classList.contains("open") && content.classList.contains("transition-open")) {
 		// ignore double click
 		if (content.classList.contains("transition-closed") ) {
-			kilroy = true;
+			overclick = true;
 		}
 		return;
 	}
@@ -142,12 +142,12 @@ function accordionToggle(btn, elem, add=0, closeable=true) {
 			content.classList.remove("transition-closed");
 	  	}
 	}
-	if (kilroy) {
+	if (overclick) {
 		//a rare bug in which we will close the accordion
 		content.classList.remove("open");
 		content.style.maxHeight = "0";
 		kids_fullHeight = 0;
-		console.warn("Kilroy was here.");kilroy=false;
+		console.warn("Kilroy was here.");overclick=false;
 	}
 }
   
