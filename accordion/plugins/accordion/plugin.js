@@ -1,7 +1,7 @@
 /*
 Add a button to ckeditor to create nestable accordion elements.
 This is an improved, accessible version of ccit's "collapsables"
-Author: Ben Alexander, student worker, circa 2023
+Author: Ben Alexander, 2023
 */
 
 function isInsideCollapsibleContainer(element) {
