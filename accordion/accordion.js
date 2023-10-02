@@ -1,6 +1,6 @@
 /*
 * AUTHOR
-* Ben Alexander, Student Worker, 2023
+* Ben Alexander, 2023
 *
 * Defines the behavior of the accordion plugin.
 */
