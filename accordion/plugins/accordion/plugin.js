@@ -41,7 +41,7 @@ function getCollapsibleContentContainerElement(startElement) {
 			return collapsibleContentContainer;
 		}
 	}
-	//reaching here means the user must have deleted the collapsible-content div
+	//Reaching here means the content editor must have deleted the collapsible-content div. This is fine.
 	let collapsibleContentContainer = document.createElement('div');
 	collapsibleContentContainer.setAttribute("class", "collapsible-content");
 	if (children.length > 1) {
