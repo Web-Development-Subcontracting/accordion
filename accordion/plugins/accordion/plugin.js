@@ -139,7 +139,7 @@ function getCollapsibleContentContainerElement(startElement) {
 						container.append(remainingContentDiv);
 					} else {
 						// Empty accordion created when nothing selected
-						let button = CKEDITOR.dom.element.createFromHtml("<h3/>", editor.document);
+						let button = CKEDITOR.dom.element.createFromHtml("<p/>", editor.document);
 						let content = CKEDITOR.dom.element.createFromHtml("<div/>", editor.document);
 						let paragraph = CKEDITOR.dom.element.createFromHtml("<p/>", editor.document);
 						content.append(paragraph);
