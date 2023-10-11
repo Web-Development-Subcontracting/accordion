@@ -6,7 +6,7 @@ Author: Ben Alexander, 2023
 
 function isInsideCollapsibleContainer(element) {
     var parentElement = element.getAscendant('div', true); // Adjust the element type as needed
-    if (parentElement && parentElement.hasClass('collapsible')) {
+    if (parentElement && parentElement.hasClass('collapsible-cc')) {
         return parentElement;
     }
     return false;
@@ -18,7 +18,7 @@ function getCollapsibleContentContainerElement(startElement) {
 	for (let i = 0; i < children.length; i++) {
 		let collapsibleContentContainer = children[i];
 		let classes = collapsibleContentContainer.classList
-		if (classes && classes.contains('collapsible-content')) {
+		if (classes && classes.contains('collapsible-content-cc')) {
 			let contents = collapsibleContentContainer.childNodes;
 			//if child is empty, add a p
 			if (contents.length === 0) {
@@ -43,7 +43,7 @@ function getCollapsibleContentContainerElement(startElement) {
 	}
 	//Reaching here means the content editor must have deleted the collapsible-content div. This is fine.
 	let collapsibleContentContainer = document.createElement('div');
-	collapsibleContentContainer.setAttribute("class", "collapsible-content");
+	collapsibleContentContainer.setAttribute("class", "collapsible-content-cc");
 	if (children.length > 1) {
 		//there should be nothing here unless something weird happened
 		let looseElems = [];
@@ -101,7 +101,7 @@ function getCollapsibleContentContainerElement(startElement) {
 
 					//create the container that will visualize the collapsible
 					let container = CKEDITOR.dom.element.createFromHtml("<div/>", editor.document);
-					container.setAttribute("class", "collapsible");
+					container.setAttribute("class", "collapsible-cc");
 					var firstChild;
 					// Identify the first child element i.e. the "button" that opens the accordion
 					if (fragment.getFirst() && fragment.getFirst().type === CKEDITOR.NODE_TEXT) {
@@ -122,7 +122,7 @@ function getCollapsibleContentContainerElement(startElement) {
 					if (firstChild) {
 						// Create a new div for the remaining content
 						let remainingContentDiv = CKEDITOR.dom.element.createFromHtml("<div/>", editor.document);
-						remainingContentDiv.setAttribute("class", "collapsible-content");
+						remainingContentDiv.setAttribute("class", "collapsible-content-cc");
 						
 						// Move the remaining content after the first child to the new div
 						let children = false;
@@ -143,7 +143,7 @@ function getCollapsibleContentContainerElement(startElement) {
 						let content = CKEDITOR.dom.element.createFromHtml("<div/>", editor.document);
 						let paragraph = CKEDITOR.dom.element.createFromHtml("<p/>", editor.document);
 						content.append(paragraph);
-						content.setAttribute("class", "collapsible-content");
+						content.setAttribute("class", "collapsible-content-cc");
 						container.append(button);
 						container.append(content);
 					}
