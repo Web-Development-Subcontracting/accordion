@@ -81,18 +81,18 @@ var styles = "cursor: pointer";
 
 	//checks if user clicked during transition
 	function checkOverclick(btn, content) {
-		if (content.classList.contains("transition-open") && content.classList.contains("transition-closed") ) {
+		if (content.classList.contains("transition-open-cc") && content.classList.contains("transition-closed-cc") ) {
 			// handle excessive clicks
-			if (btn.classList.contains("collapsible-closed")) {
-				content.classList.remove("transition-open");
+			if (btn.classList.contains("collapsible-closed-cc")) {
+				content.classList.remove("transition-open-cc");
 				content.classList.remove("open");
 				content.style.maxHeight = "0"; // Collapse the content
 				kids_fullHeight = 0;
 				ac.abort();
 				ac = new AbortController();
 			}
-			else if (btn.classList.contains("collapsible-open")) {
-				content.classList.remove("transition-closed");
+			else if (btn.classList.contains("collapsible-open-cc")) {
+				content.classList.remove("transition-closed-cc");
 			}
 
 			return true;
@@ -104,12 +104,12 @@ var styles = "cursor: pointer";
 	/* Defines what happens when the user clicks a collapsible element. */
 	function accordionToggle(btn, elem, add=0, closeable=true) {
 		var kids_fullHeight;
-		var content = elem.querySelector(".collapsible-content");
+		var content = elem.querySelector(".collapsible-content-cc");
 
-		if (btn.classList.contains("collapsible-closed") || !closeable) {
+		if (btn.classList.contains("collapsible-closed-cc") || !closeable) {
 			// Swap the classes
-			btn.classList.remove("collapsible-closed");
-			btn.classList.add("collapsible-open");
+			btn.classList.remove("collapsible-closed-cc");
+			btn.classList.add("collapsible-open-cc");
 			content.classList.add("open");
 
 			kids_fullHeight = 0 + add;
@@ -125,9 +125,9 @@ var styles = "cursor: pointer";
 
 			if (sentinel) {
 				kids_fullHeight += $(btn).outerHeight(true);
-				var elemClosestCollapsible = $(elem).parents('.collapsible');
+				var elemClosestCollapsible = $(elem).parents('.collapsible-cc');
 				if (!(elemClosestCollapsible[0] === undefined)) {
-					var newBtn = $(elemClosestCollapsible).find(".collapsible-open");
+					var newBtn = $(elemClosestCollapsible).find(".collapsible-open-cc");
 					accordionToggle(newBtn[0], elemClosestCollapsible[0], add=kids_fullHeight, closeable=false);
 				}
 			}
@@ -146,28 +146,28 @@ var styles = "cursor: pointer";
 
 			let transitionEndEventName = getTransitionEndEventName();
 			content.addEventListener(transitionEndEventName, onTransitionEnd);
-			content.classList.add('transition-open');
+			content.classList.add('transition-open-cc');
 		
 			function onTransitionEnd(){
 				content.removeEventListener(transitionEndEventName, onTransitionEnd);
-				content.classList.remove("transition-open");
+				content.classList.remove("transition-open-cc");
 			}
 
-		} else if (btn.classList.contains("collapsible-open") && closeable) {
+		} else if (btn.classList.contains("collapsible-open-cc") && closeable) {
 			// If the button element is clicked, close the content
-			btn.classList.remove("collapsible-open");
-			btn.classList.add("collapsible-closed");
+			btn.classList.remove("collapsible-open-cc");
+			btn.classList.add("collapsible-closed-cc");
 			content.classList.remove("open");
 			content.style.maxHeight = "0"; // Collapse the content
 			kids_fullHeight = 0;
 
 			let transitionEndEventName = getTransitionEndEventName();
 			content.addEventListener(transitionEndEventName, onTransitionEnd);
-			content.classList.add('transition-closed');
+			content.classList.add('transition-closed-cc');
 		
 			function onTransitionEnd(){
 				content.removeEventListener(transitionEndEventName, onTransitionEnd);
-				content.classList.remove("transition-closed");
+				content.classList.remove("transition-closed-cc");
 			}
 		}
 		checkOverclick(btn, content);
@@ -205,10 +205,10 @@ var styles = "cursor: pointer";
 	Drupal.behaviors.accordion = {
 		attach: function (context, settings) {
 			$(document).ready(function(){
-				$('.collapsible').each(function(i, elem){
+				$('.collapsible-cc').each(function(i, elem){
 					let btn = elem.firstElementChild;
 					if (btn != null) {
-						btn.classList.add("collapsible-closed");
+						btn.classList.add("collapsible-closed-cc");
 						btn.setAttribute("style", styles);
 						btn.addEventListener("click", function(){
 							accordionToggle(btn, elem);
